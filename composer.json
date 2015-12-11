@@ -1,4 +1,16 @@
 {
   "name": "nnmer/utils-bundle",
-  "description": "Symfony2(3) bundle contains different utilities"
+  "description": "Symfony2(3) bundle contains different utilities",
+  "keywords": ["symfony2", "bundle", "utils"],
+  "authors": [
+    {
+      "name": "Anton Romanov",
+      "email": "anton.v.romanov@gmail.com"
+    }
+  ],
+  "autoload":{
+    "psr-4":{
+      "Nnmer\\UtilsBundle\\": ""
+    }
+  }
 }
