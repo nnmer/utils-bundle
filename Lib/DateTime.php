@@ -103,5 +103,18 @@ class DateTime {
         }
 
     }
+
+    /**
+     *
+     * Check whether the provided string is valid date time string YYYY-MM-DD HH:ii:ss
+     *
+     * @param $date
+     *
+     * @return int
+     */
+    static public function isValidDateTimeStringFormat($date)
+    {
+        return preg_match("/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/", $date);
+    }
 }
 
