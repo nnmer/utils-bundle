@@ -53,6 +53,57 @@ class DateTime {
     }
 
     /**
+     * Convert seconds to string time
+     * @param $secs
+     * @param bool $withLeading0    whether to have leading zero for hours and minutes, working if $withWords = false
+     * @param bool $withWords       if true the result '1 day, 20 hours' of false '01:20:00:00'
+     * @return string
+     */
+    static function convertSecToStr($secs, $withLeading0 = true, $withWords = false){
+        $output = '';
+        if($secs >= 86400) {
+            $days = floor($secs/86400);
+            $secs = $secs%86400;
+            if (false === $withWords) {
+                $output = $days . ':';
+            }else{
+                $output = $days . ' day';
+                if($days != 1) $output .= 's';
+                if($secs > 0) $output .= ', ';
+            }
+        }
+        if($secs>=3600){
+            $hours = floor($secs/3600);
+            $secs = $secs%3600;
+            if (false === $withWords) {
+                $output .= $withLeading0 ? sprintf("%'.02d:",$hours) : $hours.":";;
+            }else {
+                $output .= $hours . ' hour';
+                if ($hours != 1) $output .= 's';
+                if ($secs > 0) $output .= ', ';
+            }
+        }
+        if($secs>=60){
+            $minutes = floor($secs/60);
+            $secs = $secs%60;
+            if (false === $withWords) {
+                $output .= $withLeading0 ? sprintf("%'.02d:",$minutes) : $minutes.":";
+            }else {
+                $output .= $minutes . ' minute';
+                if ($minutes != 1) $output .= 's';
+                if ($secs > 0) $output .= ', ';
+            }
+        }
+        if (false === $withWords) {
+            $output .= sprintf("%'.02d",$secs);
+        }else {
+            $output .= $secs . ' second';
+            if ($secs != 1) $output .= 's';
+        }
+        return $output;
+    }
+
+    /**
      * Check if 2 date ranges intersects
      * @param $date1start
      * @param $date1end
