@@ -52,9 +52,9 @@ class Pagination {
         $ids = array_map('current', $result);
 
         if(count($ids)>0) {
-            $clone->where($clone->expr()->in("$fromAlias.id", $ids));
+            $clone->andWhere($clone->expr()->in("$fromAlias.id", $ids));
         }else{
-            $clone->where("1=0");
+            $clone->andWhere("1=0");
         }
 
 
