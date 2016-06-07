@@ -96,6 +96,10 @@ class DateTime {
         }
         if (false === $withWords) {
             $output .= sprintf("%'.02d",$secs);
+            if (strlen($output)==2){
+                //that is just several second, no full minute
+                $output = '00:'.$output;
+            }
         }else {
             $output .= $secs . ' second';
             if ($secs != 1) $output .= 's';
