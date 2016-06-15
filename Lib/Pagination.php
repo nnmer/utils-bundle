@@ -51,10 +51,11 @@ class Pagination {
         $result = $dql->select("DISTINCT $fromAlias.id")->getQuery()->getArrayResult();
         $ids = array_map('current', $result);
 
+        $clone->getParameters()->clear();
         if(count($ids)>0) {
-            $clone->andWhere($clone->expr()->in("$fromAlias.id", $ids));
+            $clone->where($clone->expr()->in("$fromAlias.id", $ids));
         }else{
-            $clone->andWhere("1=0");
+            $clone->where("1=0");
         }
 
 
