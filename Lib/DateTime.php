@@ -171,5 +171,43 @@ class DateTime {
     {
         return preg_match("/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/", $date);
     }
+
+    /**
+     * Get the monday and sunday of each week in the range
+     * taken from @link http://stackoverflow.com/a/38667504
+     *
+     * @param $start
+     * @param $end
+     * @return array
+     */
+    static public function getDateRangeForAllWeeks($start, $end){
+        $fweek = self::getDateRangeForWeek($start);
+        $lweek = self::getDateRangeForWeek($end);
+        $week_dates = [];
+        while($fweek['sunday']!=$lweek['sunday']){
+            $week_dates [] = $fweek;
+            $date = new \DateTime($fweek['sunday']);
+            $date->modify('next day');
+
+            $fweek = self::getDateRangeForWeek($date->format("Y-m-d"));
+        }
+        $week_dates [] = $lweek;
+
+        return $week_dates;
+    }
+
+    /**
+     * Get the monday and sunday of the week from the date
+     * taken from @link http://stackoverflow.com/a/38667504
+     *
+     * @param $date
+     * @return array
+     */
+    static public function getDateRangeForWeek($date){
+        $dateTime = new \DateTime($date);
+        $monday = clone $dateTime->modify(('Sunday' == $dateTime->format('l')) ? 'Monday last week' : 'Monday this week');
+        $sunday = clone $dateTime->modify('Sunday this week');
+        return [$monday->format("Y-m-d"), $sunday->format("Y-m-d")];
+    }
 }
 
