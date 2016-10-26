@@ -39,6 +39,8 @@ class Pagination {
         }
 
         $clone = Pagination::cloneQuery($dql);
+        $fromAlias = current($dql->getRootAliases());
+        $dql->select("partial $fromAlias.{id}");
         $paginator = new Paginator($dql);
         $total = $paginator->count();
 
